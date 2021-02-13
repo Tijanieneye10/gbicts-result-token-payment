@@ -20,6 +20,7 @@
                         <th>SN</th>
                         <th>Tokens </th>
                         <th>Used by</th>
+                        <th>Used Times</th>
                         <th>Status</th>
                         <th>Purchased</th>
                         <th>Mark as Sold</th>
@@ -32,6 +33,7 @@
                         <td>{{ $loop->iteration}}</td>
                         <td>{{ $token->cards }}</td>
                         <td>{{ $token->used_by ?? 'Not used' }}</td>
+                        <td>{{ $token->used_time}}</td>
                         <td>{{ $token->sold ?? 'Not sold yet' }}</td>
                         <td>{{ $token->created_at->diffForHumans() }}</td>
                         @can('updateSoldTime', $token)
