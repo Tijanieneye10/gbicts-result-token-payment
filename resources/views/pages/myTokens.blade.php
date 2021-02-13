@@ -3,7 +3,7 @@
 @section('pagedesc', 'All my tokens')
 @section('tags')
 <!-- Datatable css-->
-<link rel="stylesheet" type="text/css" href="{{ asset('css/datatables.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/datatables.css') }}">
 @endsection
 
 @section('content')
@@ -20,7 +20,9 @@
                         <th>SN</th>
                         <th>Tokens </th>
                         <th>Used by</th>
-                        <th>Purchased On</th>
+                        <th>Status</th>
+                        <th>Purchased</th>
+                        <th>Mark as Sold</th>
 
                     </tr>
                 </thead>
@@ -29,8 +31,13 @@
                     <tr>
                         <td>{{ $loop->iteration}}</td>
                         <td>{{ $token->cards }}</td>
-                        <td>{{ $token->used_by ?? 'Still Available' }}</td>
+                        <td>{{ $token->used_by ?? 'Not used' }}</td>
+                        <td>{{ $token->sold ?? 'Not sold yet' }}</td>
                         <td>{{ $token->created_at->diffForHumans() }}</td>
+                        @can('updateSoldTime', $token)
+                        <td><a href="{{ route('tokens.show', $token) }}"><span class="badge badge-primary"> Mark as
+                                    Sold</span></a></td>
+                        @endcan
                     </tr>
                     @endforeach
 
@@ -43,8 +50,8 @@
 @endsection
 
 @push('scripts')
-<script src="{{ asset('js/datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('js/datatables/custom-basic.js') }}"></script>
+<script src="{{ asset('assets/js/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/js/datatables/custom-basic.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 {{-- Show alert if deleted successfully --}}

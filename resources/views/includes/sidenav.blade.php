@@ -6,25 +6,25 @@
                     src="https://ui-avatars.com/api/?background=random&name={{ auth()->user()->name }}+{{ auth()->user()->lastname }}"
                     alt="#">
             </div>
-            <h6 class="mt-3 f-14">{{ auth()->user()->name }}</h6>
+            <h6 class="mt-3 f-14">{{ auth()->user()->full_name }}</h6>
             <p>{{ auth()->user()->role }}</p>
         </div>
         @endauth
         <ul class="sidebar-menu">
-            <li><a class="sidebar-header" href="index.html"><i data-feather="home"></i><span>Dashboard</span></a></li>
+            <li><a class="sidebar-header" href="{{ route('dashboard') }}"><i data-feather="home"></i><span>Dashboard</span></a></li>
 
-
-            <li><a class="sidebar-header" href=""><i data-feather="user-plus"></i><span>Users</span><i
+            @can('isAdmin')
+            <li><a class="sidebar-header" href=""><i data-feather="user-plus"></i><span>Administrator</span><i
                         class="fa fa-angle-right pull-right"></i></a>
                 <ul class="sidebar-submenu">
                     <li><a href="{{ route('getUsers') }}"><i class="fa fa-circle"></i>User List</a></li>
-                    <li><a href="{{ route('regUser') }}"><i class="fa fa-circle"></i>Create User</a></li>
+                    <li><a href="{{ route('register') }}"><i class="fa fa-circle"></i>Create User</a></li>
+                    <li><a href="{{ route('viewToken') }}"><i class="fa fa-circle"></i>Manage Token</a></li>
                 </ul>
             </li>
+            @endcan
 
 
-            <li><a class="sidebar-header" href="{{ route('viewToken') }}"><i data-feather="bar-chart"></i><span>Manage
-                        Tokens</span></a></li>
             <li><a class="sidebar-header" href="{{ route('tokens.index') }}"><i data-feather="bar-chart"></i><span>Buy
                         Tokens</span></a></li>
             <li><a class="sidebar-header" href="{{ route('getUserTokens') }}"><i data-feather="bar-chart"></i><span>My

@@ -1,68 +1,86 @@
-{{-- <x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+@extends('layouts.main')
+@section('pagename', 'Create User')
+@section('pagedesc', 'Add a new user')
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+@section('content')
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <h5>Register User</h5>
+        </div>
+        <div class="card-body vendor-table">
+            <div class="col-md-12">
+                @if(session()->has('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <strong>{{ session()->get('success') }}</strong>
+                </div>
+                @endif
+                <form action="{{ route('register') }}" method="POST">
+                    @csrf
+                    <div class="form-group form-row">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control mb-1" name="name" placeholder="Enter Firstname">
+                            @error('name')
+                                    <x-alert name="name" :message="$message" />
+                            @enderror
+                        </div>
 
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
-
-            <!-- Name -->
-            <div>
-                <x-label for="name" :value="__('Name')" />
-
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" name="lastname" placeholder="Enter Lastname">
+                            @error('lastname')
+                                     <x-alert name="lastname" :message="$message" />
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group form-row">
+                        <div class="col-md-6">
+                            <input type="email" class="form-control" name="email" placeholder="Enter Email Address">
+                            @error('email')
+                                    <x-alert name="email" :message="$message" />
+                            @enderror
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" name="school" placeholder="Enter School Name">
+                            @error('school')
+                                    <x-alert name="school" :message="$message" />
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group form-row">
+                        <div class="col-md-4">
+                            <input type="number" class="form-control" name="price" placeholder="Enter Token Price for School">
+                            @error('price')
+                                    <x-alert name="price" :message="$message" />
+                            @enderror
+                        </div>
+                        <div class="col-md-4">
+                            <input type="number" class="form-control" name="phone" placeholder="Enter Phone Number">
+                            @error('phone')
+                                    <x-alert name="phone" :message="$message" />
+                            @enderror
+                        </div>
+                        <div class="col-md-4">
+                            <select name="role" id="" class="form-control">
+                                <option value="">Select User Role</option>
+                                <option value="Admin">Admin</option>
+                                <option value="Standard">Standard</option>
+                            </select>
+                            @error('role')
+                                    <x-alert name="role" :message="$message" />
+                            @enderror
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register User</button>
+                </form>
             </div>
 
-            <!-- Email Address -->
-            <div class="mt-4">
-                <x-label for="email" :value="__('Email')" />
+        </div>
+    </div>
+</div>
+@endsection
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-            </div>
 
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
 
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
-            </div>
-
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
-
-                <x-button class="ml-4">
-                    {{ __('Register') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout> --}}
-<x-auth-validation-errors class="mb-4" :errors="$errors" />
-<form method="POST" action="{{ route('register') }}">
-    @csrf
-<input type="text" name="name" placeholder="Enter name">
-<input type="email" name="email" placeholder="Enter Email">
-<input type="password" name="password" placeholder="Enter Password">
-<input type="password" name="password_confirmation" placeholder="Confirm Password">
-<button type="submit">Submit</button>
-</form>

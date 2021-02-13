@@ -3,7 +3,7 @@
 @section('pagedesc', 'All Tokens')
 @section('tags')
 <!-- Datatable css-->
-<link rel="stylesheet" type="text/css" href="{{ asset('css/datatables.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/datatables.css') }}">
 @endsection
 
 @section('content')
@@ -78,8 +78,8 @@
 @endsection
 
 @push('scripts')
-<script src="{{ asset('js/datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('js/datatables/custom-basic.js') }}"></script>
+<script src="{{ asset('assets/js/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/js/datatables/custom-basic.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 {{-- Show alert if deleted successfully --}}

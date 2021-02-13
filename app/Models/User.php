@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -20,6 +21,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'email',
+        'firstname',
+        'lastname',
+        'school',
+        'role',
+        'price',
+        'phone',
     ];
 
     /**
@@ -40,4 +48,34 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // Let set a mutator for password
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = Hash::make(strtolower($value));
+    }
+
+    // Set name to capital
+    public function setNameAtrribute($value)
+    {
+        $this->attributes['name'] = ucfirst($value);
+    }
+
+    // Set lastname name to capital
+    public function setLastNameAtrribute($value)
+    {
+        $this->attributes['lastname'] = ucfirst($value);
+    }
+
+    // Let get a accessor for fullname
+    public function getFullNameAttribute()
+    {
+        return "{$this->name} {$this->lastname}";
+    }
+
+    // let connect user and sales
+    public function sales()
+    {
+        return $this->hasMany(Sales::class);
+    }
 }
