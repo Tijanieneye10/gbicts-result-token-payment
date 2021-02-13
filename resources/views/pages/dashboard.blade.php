@@ -52,11 +52,16 @@
             <div class="card o-hidden widget-cards">
                 <div class="bg-warning card-body">
                     <div class="media static-top-widget">
-                        <div class="media-body"><span class="m-0">Total Registered School</span>
-                            <h3 class="mb-0"><span class="counter">{{ $totalSchool }}</span></h3>
+                        <div class="media-body"><span
+                                class="m-0">{{ $totalSchool ? 'Total Registered School' : 'Available Tokens' }}</span>
+                            <h3 class="mb-0"><span class="counter">{{ $totalSchool ??  $notUsedorSold }}</span></h3>
                         </div>
                         <div class="icons-widgets">
+                            @if ($totalSchool)
                             <i class="fa fa-institution fa-lg"></i>
+                            @else
+                            <i class="fa fa-edit fa-lg"></i>
+                            @endif
                         </div>
                     </div>
                 </div>

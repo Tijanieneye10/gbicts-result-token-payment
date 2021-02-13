@@ -17,7 +17,6 @@ class AdminController extends Controller
     public function index()
     {
         $getTokens = Admin::orderBy('card_time', 'ASC')->get();
-        // dd($getTokens);
         return view('pages.showToken', compact('getTokens'));
     }
 
@@ -34,14 +33,6 @@ class AdminController extends Controller
         Admin::generateToken($request->tokenNumber);
         return back()->with('success', 'Token successfully generated');
     }
-
-        // // Let store user
-        // public function storeUser(CreateUserRequest $request)
-        // {
-        //     $request->request->add(['password' => $request->name]);
-        //     User::create($request->all());
-        //     return back()->with('success', 'User Created successfully');
-        // }
 
         // get all users
         public function getUsers()

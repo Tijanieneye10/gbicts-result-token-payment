@@ -24,11 +24,23 @@ use App\Http\Controllers\Admin\AdminController;
 // })->middleware(['auth'])->name('dashboard');
 
 Route::get('/', function () {
-    $getAllTokenCounts = Admin::count();
-    $soldTokens = Admin::where('status', 'sold')->count();
-    $usedTokens = Admin::whereNotNull('card_user')->count();
-    $totalSchool = User::where('role', 'Standard')->count();
-    return view('pages.dashboard', compact('getAllTokenCounts', 'soldTokens', 'totalSchool', 'usedTokens'));
+
+    if(auth()->user()->role === 'Admin') :
+        $getAllTokenCounts = Admin::count();
+        $soldTokens = Admin::where('status', 'sold')->count();
+        $usedTokens = Admin::whereNotNull('card_user')->count();
+        $totalSchool = User::where('role', 'Standard')->count();
+        $notUsedorSold = null;
+    else:
+        // For user that are not admin should see only there details
+        $getAllTokenCounts = auth()->user()->sales()->count();
+        $soldTokens = auth()->user()->sales()->whereNotNull('sold')->count();
+        $usedTokens = auth()->user()->sales()->whereNotNull('used_by')->count();
+        $notUsedorSold = auth()->user()->sales()->whereNull(['used_by', 'sold'])->count();
+        $totalSchool  = null;
+    endif;
+
+    return view('pages.dashboard', compact('getAllTokenCounts', 'soldTokens', 'totalSchool', 'usedTokens', 'notUsedorSold'));
 })->middleware(['auth'])->name('dashboard');
 
 Route::middleware(['auth', 'can:isAdmin'])->prefix('admin')->group(function () {
@@ -49,6 +61,7 @@ Route::middleware(['auth', 'can:isAdmin'])->prefix('admin')->group(function () {
 Route::middleware('auth')->prefix('portal')->group(function () {
     // All get Routes
     Route::get('/my-tokens',  [UserController::class, 'getUserTokens'])->name('getUserTokens');
+    Route::view('/my-profile',  'pages.myProfile')->name('myProfile');
     // All post Routes
     Route::post('/change-password', [UserController::class, 'changePassword'])->name('changePassword');
     Route::view('/change-password', 'pages.changePassword')->name('changePassword');

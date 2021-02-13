@@ -40,6 +40,8 @@
 
                         <li><a href="{{ route('changePassword') }}">Change Password<span class="pull-right"><i class="fa fa-lock"></i></span></a>
                         </li>
+                        <li><a href="{{ route('myProfile') }}">Profile<span class="pull-right"><i class="fa fa-lock"></i></span></a>
+                        </li>
                         <li><a href="#" onclick="event.preventDefault(); document.getElementById('logout').submit()">Logout<span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
                         <form action="{{ route('logout') }}" method="POST" id="logout">
                             @csrf

@@ -35,8 +35,12 @@
                         <td>{{ $token->sold ?? 'Not sold yet' }}</td>
                         <td>{{ $token->created_at->diffForHumans() }}</td>
                         @can('updateSoldTime', $token)
+                        @if (is_null($token->sold))
                         <td><a href="{{ route('tokens.show', $token) }}"><span class="badge badge-primary"> Mark as
                                     Sold</span></a></td>
+                        @else
+                        <td><span class="badge badge-success">Sold</span></td>
+                        @endif
                         @endcan
                     </tr>
                     @endforeach
